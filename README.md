@@ -1,13 +1,31 @@
 # React-Django-Docker
-ReactとDjangoを用いてアプリを開発する用のdocker-composeです。
+
+React と Django を用いてアプリを開発する用の docker-compose です。
 
 ##　実行には下記コマンドを実行
 
-### 最初の docker-compose up -d --build 実行時にコメントアウトが必要なもの
+### 最初の make build-up 実行時にコメントアウトが必要なもの
 
-command: sh -c "cd api && python3 manage.py runserver 0.0.0.0:8000"
+<!-- ### 最初の docker-compose up -d --build 実行時にコメントアウトが必要なもの -->
+
+command: sh -c "cd api && python3 manage.py runserver 0.0.0.0:8000"  
 command: sh -c "cd frontend && yarn start"
 
+1. make build-up
+2. make run-api
+3. make run-front
+4. make yarn-add
+5. ここでコメントアウトをはずす。
+6. make build-up
+7. package.json に"proxy": "http://api:8000",を追記。  
+   settings.py に ALLOWED_HOSTS = ["api"]と  
+   CORS_ORIGIN_WHITELIST = [
+   'http://node:3000'
+   ]  
+   を追記。
+8. make down
+
+<!-- 以下makeが実行できない時
 1.  docker-compose up -d --build
 2.  docker-compose exec api /bin/bash
 3.  mkdir api && cd api
@@ -23,4 +41,4 @@ command: sh -c "cd frontend && yarn start"
 13. package.json に"proxy": "http://api:8000",を追記。 settings.py に ALLOWED_HOSTS = ["api"]と CORS_ORIGIN_WHITELIST = [
     'http://node:3000'
     ]を追記。
-14. docker-compose down
+14. docker-compose down -->
